@@ -8,12 +8,12 @@
 #-------------------------------------------------------------------------
 
 echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download - US Only"
+echo "Setting up mirrors for optimal download - NL Only"
 echo "-------------------------------------------------"
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-curl -s "https://www.archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+curl -s "https://www.archlinux.org/mirrorlist/?country=NL&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 
 
 
@@ -62,6 +62,7 @@ mount -t vfat "${DISK}1" /mnt/boot/
 echo "--------------------------------------"
 echo "-- Arch Install on Main Drive       --"
 echo "--------------------------------------"
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 pacstrap /mnt base base-devel linux linux-firmware vim nano sudo --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
